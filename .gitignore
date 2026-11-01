@@ -1,15 +1,23 @@
-data # CLINC150 source data
-.idea
-.venv
-sandbox.ipynb
+# Dataset
+/data/*
+!/data/.gitkeep
 
-# Python cache
+# Virtual environment
+.venv/
+
+# Python
 __pycache__/
 *.py[cod]
 .pytest_cache/
 .ruff_cache/
-.mypy_cache/
 
-# Temporary files
-*.log
-*.tmp
+# Jupyter
+notebooks/sandbox/*
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
