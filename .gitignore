@@ -1,4 +1,4 @@
-/data/*.json # CLINC150 source data
+data # CLINC150 source data
 .idea
 .venv
 sandbox.ipynb
