@@ -1,0 +1,384 @@
+{
+  "status": "Итерация 1: проект протокола, сформирован до обучения; заморозить перед экспериментами",
+  "protocol_version": "near-oos-train-audit-v1",
+  "dataset": {
+    "source": "https://github.com/clinc/oos-eval/tree/master/data",
+    "license": "CC BY 3.0",
+    "checksums_sha256": {
+      "data_full.json": "36923c3705a59e08fe9c3883d8bc2dd966ef93e22cb78ac41171782a698d56e0",
+      "domains.json": "b947b579d3b8e74b06f93b01083d8efaff2888b43a3e362533bd88a6e1211b3a"
+    },
+    "known_splits": {
+      "train": "train",
+      "validation": "val",
+      "test": "test"
+    },
+    "original_oos_test": "oos_test",
+    "near_oos_test": "test"
+  },
+  "seeds": [
+    17,
+    42,
+    123
+  ],
+  "k_values": [
+    10,
+    20,
+    30
+  ],
+  "target_known_validation_acceptance": 0.95,
+  "threshold_fit_split": "val",
+  "near_oos_by_domain": {
+    "auto_and_commute": "oil_change_when",
+    "banking": "bill_due",
+    "credit_cards": "report_lost_card",
+    "home": "todo_list_update",
+    "kitchen_and_dining": "restaurant_reservation",
+    "meta": "change_volume",
+    "small_talk": "where_are_you_from",
+    "travel": "book_flight",
+    "utility": "alarm",
+    "work": "pto_request_status"
+  },
+  "near_oos_intents": [
+    "oil_change_when",
+    "bill_due",
+    "report_lost_card",
+    "todo_list_update",
+    "restaurant_reservation",
+    "change_volume",
+    "where_are_you_from",
+    "book_flight",
+    "alarm",
+    "pto_request_status"
+  ],
+  "selection_rule": "Данные/примеры только из train; вручную проверенные пары grade=2 зафиксированные в eligible_known_by_domain (экспертная оценка на train; CSV — локальный аудиторский материал). Один фиксированный Held-out на домен. Для K=10 по одному близкому Known на домен; между тремя фиксированными повторениями применяется воспроизводимая ротация допустимых кандидатов без повторения до исчерпания пула (если кандидат один, он фиксирован). Оставшиеся классы этого домена (кроме всех Held-out) перемешиваются по seed и добавляются по одному на домен для K=20 и K=30. Все наборы вложены внутри seed; OOS-test наборы неизменны для всех запусков. Повторения различаются составом известных классов, но не статистически независимы. В work и utility только по одному надёжному кандидату; эти два якоря фиксированы.",
+  "candidate_table": {
+    "role": "optional_local_audit_only",
+    "examples_split": "train",
+    "eligible_grade": 2,
+    "same_domain_required": true,
+    "not_required_for_reproduction": true
+  },
+  "expected_test_sizes": {
+    "original_oos": 1000,
+    "near_oos": 300
+  },
+  "vectorizer": {
+    "type": "TfidfVectorizer",
+    "ngram_range": [
+      1,
+      1
+    ],
+    "min_df": 1,
+    "norm": "l2",
+    "smooth_idf": true
+  },
+  "classifier": {
+    "type": "LogisticRegression",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "max_iter": 1000
+  },
+  "reject_methods": [
+    "max_predict_proba",
+    "max_cosine_similarity_to_train"
+  ],
+  "experiments": [
+    {
+      "seed": 17,
+      "anchors_by_domain": {
+        "auto_and_commute": "oil_change_how",
+        "banking": "min_payment",
+        "credit_cards": "replacement_card_duration",
+        "home": "shopping_list_update",
+        "kitchen_and_dining": "cancel_reservation",
+        "meta": "change_speed",
+        "small_talk": "how_old_are_you",
+        "travel": "car_rental",
+        "utility": "timer",
+        "work": "pto_request"
+      },
+      "known_intents": {
+        "10": [
+          "oil_change_how",
+          "min_payment",
+          "replacement_card_duration",
+          "shopping_list_update",
+          "cancel_reservation",
+          "change_speed",
+          "how_old_are_you",
+          "car_rental",
+          "timer",
+          "pto_request"
+        ],
+        "20": [
+          "oil_change_how",
+          "directions",
+          "min_payment",
+          "routing",
+          "replacement_card_duration",
+          "expiration_date",
+          "shopping_list_update",
+          "order",
+          "cancel_reservation",
+          "ingredient_substitution",
+          "change_speed",
+          "sync_device",
+          "how_old_are_you",
+          "goodbye",
+          "car_rental",
+          "carry_on",
+          "timer",
+          "text",
+          "pto_request",
+          "pto_balance"
+        ],
+        "30": [
+          "oil_change_how",
+          "directions",
+          "gas",
+          "min_payment",
+          "routing",
+          "account_blocked",
+          "replacement_card_duration",
+          "expiration_date",
+          "damaged_card",
+          "shopping_list_update",
+          "order",
+          "play_music",
+          "cancel_reservation",
+          "ingredient_substitution",
+          "confirm_reservation",
+          "change_speed",
+          "sync_device",
+          "user_name",
+          "how_old_are_you",
+          "goodbye",
+          "what_are_your_hobbies",
+          "car_rental",
+          "carry_on",
+          "travel_notification",
+          "timer",
+          "text",
+          "time",
+          "pto_request",
+          "pto_balance",
+          "income"
+        ]
+      }
+    },
+    {
+      "seed": 42,
+      "anchors_by_domain": {
+        "auto_and_commute": "schedule_maintenance",
+        "banking": "pay_bill",
+        "credit_cards": "damaged_card",
+        "home": "calendar_update",
+        "kitchen_and_dining": "accept_reservations",
+        "meta": "whisper_mode",
+        "small_talk": "who_made_you",
+        "travel": "book_hotel",
+        "utility": "timer",
+        "work": "pto_request"
+      },
+      "known_intents": {
+        "10": [
+          "schedule_maintenance",
+          "pay_bill",
+          "damaged_card",
+          "calendar_update",
+          "accept_reservations",
+          "whisper_mode",
+          "who_made_you",
+          "book_hotel",
+          "timer",
+          "pto_request"
+        ],
+        "20": [
+          "schedule_maintenance",
+          "mpg",
+          "pay_bill",
+          "bill_balance",
+          "damaged_card",
+          "replacement_card_duration",
+          "calendar_update",
+          "order",
+          "accept_reservations",
+          "confirm_reservation",
+          "whisper_mode",
+          "cancel",
+          "who_made_you",
+          "meaning_of_life",
+          "book_hotel",
+          "international_visa",
+          "timer",
+          "calculator",
+          "pto_request",
+          "w2"
+        ],
+        "30": [
+          "schedule_maintenance",
+          "mpg",
+          "last_maintenance",
+          "pay_bill",
+          "bill_balance",
+          "min_payment",
+          "damaged_card",
+          "replacement_card_duration",
+          "credit_limit",
+          "calendar_update",
+          "order",
+          "what_song",
+          "accept_reservations",
+          "confirm_reservation",
+          "restaurant_reviews",
+          "whisper_mode",
+          "cancel",
+          "yes",
+          "who_made_you",
+          "meaning_of_life",
+          "are_you_a_bot",
+          "book_hotel",
+          "international_visa",
+          "plug_type",
+          "timer",
+          "calculator",
+          "flip_coin",
+          "pto_request",
+          "w2",
+          "meeting_schedule"
+        ]
+      }
+    },
+    {
+      "seed": 123,
+      "anchors_by_domain": {
+        "auto_and_commute": "tire_change",
+        "banking": "bill_balance",
+        "credit_cards": "replacement_card_duration",
+        "home": "todo_list",
+        "kitchen_and_dining": "confirm_reservation",
+        "meta": "change_accent",
+        "small_talk": "how_old_are_you",
+        "travel": "car_rental",
+        "utility": "timer",
+        "work": "pto_request"
+      },
+      "known_intents": {
+        "10": [
+          "tire_change",
+          "bill_balance",
+          "replacement_card_duration",
+          "todo_list",
+          "confirm_reservation",
+          "change_accent",
+          "how_old_are_you",
+          "car_rental",
+          "timer",
+          "pto_request"
+        ],
+        "20": [
+          "tire_change",
+          "oil_change_how",
+          "bill_balance",
+          "min_payment",
+          "replacement_card_duration",
+          "card_declined",
+          "todo_list",
+          "update_playlist",
+          "confirm_reservation",
+          "calories",
+          "change_accent",
+          "reset_settings",
+          "how_old_are_you",
+          "greeting",
+          "car_rental",
+          "travel_notification",
+          "timer",
+          "make_call",
+          "pto_request",
+          "pto_balance"
+        ],
+        "30": [
+          "tire_change",
+          "oil_change_how",
+          "jump_start",
+          "bill_balance",
+          "min_payment",
+          "pay_bill",
+          "replacement_card_duration",
+          "card_declined",
+          "credit_limit",
+          "todo_list",
+          "update_playlist",
+          "calendar_update",
+          "confirm_reservation",
+          "calories",
+          "restaurant_suggestion",
+          "change_accent",
+          "reset_settings",
+          "no",
+          "how_old_are_you",
+          "greeting",
+          "what_are_your_hobbies",
+          "car_rental",
+          "travel_notification",
+          "exchange_rate",
+          "timer",
+          "make_call",
+          "definition",
+          "pto_request",
+          "pto_balance",
+          "next_holiday"
+        ]
+      }
+    }
+  ],
+  "eligible_known_by_domain": {
+    "auto_and_commute": [
+      "last_maintenance",
+      "oil_change_how",
+      "schedule_maintenance",
+      "tire_change"
+    ],
+    "banking": [
+      "bill_balance",
+      "min_payment",
+      "pay_bill"
+    ],
+    "credit_cards": [
+      "damaged_card",
+      "replacement_card_duration"
+    ],
+    "home": [
+      "calendar_update",
+      "shopping_list_update",
+      "todo_list"
+    ],
+    "kitchen_and_dining": [
+      "accept_reservations",
+      "cancel_reservation",
+      "confirm_reservation"
+    ],
+    "meta": [
+      "change_accent",
+      "change_speed",
+      "whisper_mode"
+    ],
+    "small_talk": [
+      "how_old_are_you",
+      "who_made_you"
+    ],
+    "travel": [
+      "book_hotel",
+      "car_rental"
+    ],
+    "utility": [
+      "timer"
+    ],
+    "work": [
+      "pto_request"
+    ]
+  }
+}
