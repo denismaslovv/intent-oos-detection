@@ -1,6 +1,7 @@
 # Dataset
 /data/*
 !/data/.gitkeep
+sandbox/*
 
 # Virtual environment
 .venv/
@@ -17,6 +18,7 @@ notebooks/sandbox/*
 # IDE
 .idea/
 .vscode/
+.obsidian/*
 
 # OS
 .DS_Store
